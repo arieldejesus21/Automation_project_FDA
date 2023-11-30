@@ -1,0 +1,33 @@
+{
+    "name": [
+        "Ariel",
+        "Mauro",
+        "Maria"
+    ],
+    "lastName": [
+        "Torres",
+        "Perez",
+        "Salgado"
+    ],
+    "email": [
+        "ariel10@gmail.com",
+        "mauro11@gmail.com",
+        "maria12@gmail.com",
+        "ariel.torres+6@omni.pro",
+        "maria6@gmail.com"
+    ],
+    "phone": "98765432",
+    "password": [
+        "Omniuser1",
+        "Omniuser2",
+        "Omnius",
+        "123456789"
+    ],
+    "wallet": [
+        "9690001489792"
+    ],
+    "birthdate": [
+        "ene",
+        "1989"
+    ]
+}
