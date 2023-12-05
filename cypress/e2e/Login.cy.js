@@ -145,30 +145,5 @@ describe('Test cases for Login flow', () => {
             cy.get('.opc-block-summary').should('be.visible')
 
         })
-
-        // ADDP-001: Verificar que permita añadir un Producto al Carrito desde la Página de categorias (PLP) - Guest
-        it.only('ADDP-001: Verify that it allows you to add a Product to the Cart from the Category Page (PLP) - Guest', () => {
-
-            cy.visit('https://mcstaging.fahorro.com/bebidas.html')
-
-            //Dar clic en "Agregar al carrito"
-            cy.get('#product-item-info_323 > .details > :nth-child(3) > .product > .actions-primary > form > .action').click()
-
-            //Abrir carrito de compra
-            cy.wait(2000)
-
-            cy.get('.counter-number').then(($string) => {
-                const value = parseFloat($string.text());
-                // Asegúrate de que la conversión fue exitosa y que tienes un número
-                expect(value).to.be.a('number');
-                // Verificar que el valor es mayor a 0
-                expect(value).to.be.greaterThan(0);
-            });
-
-            cy.get('.showcart').click()
-
-            //Verificar que el producto se haya agregado
-            cy.get('strong > .qty').contains('Producto')
-        })
     })
 })

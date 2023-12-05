@@ -33,6 +33,11 @@ describe('Test cases for Create Account flow', () => {
             cy.get('#password-confirmation').type(dataUser.password[0])
             cy.get('#terms_and_conditions').check()
 
+            cy.get('#dob').click().should('be.visible') // Fecha de nacimiendo
+            cy.get('.ui-datepicker-month').should('be.visible').select(dataUser.birthdate[0]) // Fecha de nacimiendo
+            cy.get('.ui-datepicker-year').should('be.visible').select(dataUser.birthdate[1]) // Fecha de nacimiendo
+            cy.get('.ui-state-default:eq(4)').click() // Fecha de nacimiendo
+
             // Hacer clic en "Crear cuenta" del formulario
             cy.get('#send2').click()
 
@@ -51,10 +56,15 @@ describe('Test cases for Create Account flow', () => {
             // Rellenar el formulario de registro con datos de prueba
             cy.get('#firstname').type(dataUser.name[0])
             cy.get('#lastname').type(dataUser.lastName[0])
-            cy.get('#email_address').type(dataUser.email[0])
+            cy.get('#email_address').type(dataUser.email[1])
             cy.get('#password').type(dataUser.password[0])
             cy.get('#password-confirmation').type(dataUser.password[0])
             cy.get('#terms_and_conditions').check()
+
+            cy.get('#dob').click().should('be.visible') // Fecha de nacimiendo
+            cy.get('.ui-datepicker-month').should('be.visible').select(dataUser.birthdate[0]) // Fecha de nacimiendo
+            cy.get('.ui-datepicker-year').should('be.visible').select(dataUser.birthdate[1]) // Fecha de nacimiendo
+            cy.get('.ui-state-default:eq(4)').click() // Fecha de nacimiendo
 
             // Hacer clic en "Crear cuenta" del formulario
             cy.get('#send2').click()
@@ -78,6 +88,11 @@ describe('Test cases for Create Account flow', () => {
             cy.get('#password').type(dataUser.password[0])
             cy.get('#password-confirmation').type(dataUser.password[0])
             cy.get('#terms_and_conditions').check()
+
+            cy.get('#dob').click().should('be.visible') // Fecha de nacimiendo
+            cy.get('.ui-datepicker-month').should('be.visible').select(dataUser.birthdate[0]) // Fecha de nacimiendo
+            cy.get('.ui-datepicker-year').should('be.visible').select(dataUser.birthdate[1]) // Fecha de nacimiendo
+            cy.get('.ui-state-default:eq(4)').click() // Fecha de nacimiendo
 
             // Hacer clic en "Crear cuenta" del formulario
             cy.get('#send2').click()
@@ -178,6 +193,7 @@ describe('Test cases for Create Account flow', () => {
             */ // LO VEO NO NECESARIO
             // Hacer clic en "Crear cuenta" del formulario
 
+
             cy.get('#password').type(dataUser.password[3])
 
             // Hacer clic en "Crear cuenta" del formulario
@@ -201,7 +217,7 @@ describe('Test cases for Create Account flow', () => {
             // Rellenar el formulario de registro con datos de prueba
             cy.get('#firstname').type(dataUser.name[0])
             cy.get('#lastname').type(dataUser.lastName[0])
-            cy.get('#email_address').type(dataUser.email[1])
+            cy.get('#email_address').type(dataUser.email[2])
             cy.get('#password').type(dataUser.password[0])
             cy.get('#password-confirmation').type(dataUser.password[0])
 
@@ -217,6 +233,7 @@ describe('Test cases for Create Account flow', () => {
 
             // Hacer clic en "Crear cuenta" del formulario
             cy.get('#send2').click()
+
             //Verifica que la cuenta se haya creado correctamente
             cy.get('.message-success').should('be.visible')
 
