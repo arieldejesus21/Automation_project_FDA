@@ -1,4 +1,0 @@
-CREATE ACCOUNT
-
-CRE-001: Verificar que un usuario no registrado pueda crear una cuenta
-CRE-002: Verificar que un usuario registrado no pueda crear una cuenta
