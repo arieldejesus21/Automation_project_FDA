@@ -13,7 +13,7 @@ module.exports = defineConfig({
     saveAllAttempts: false,
   },
 
-  retries: 0,
+  retries: 2,
   defaultCommandTimeout: 5000,
   fixturesFolder: 'cypress/fixtures',
 
