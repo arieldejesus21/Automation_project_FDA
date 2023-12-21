@@ -18,25 +18,41 @@ describe('Test cases for Create Account flow', () => {
     context('Create Account flow', () => {
 
         // CRE-001: Verificar que un usuario no registrado pueda crear una cuenta
-        it('CRE-001: Verify that an unregistered user can create an account', () => {
+        it.only('CRE-001: Verify that an unregistered user can create an account', () => {
 
             // Hacer clic en el botón "Mi Cuenta" para abrir el MODAL
             cy.get('.customer-welcome > .action').click()
+
             // Hacer clic en el botón de "Crear una cuenta"
-            cy.get('.customer-account-create-link > span').click()
+            cy.get('.customer-account-create-link').click()
 
-            // Rellenar el formulario de registro con datos de prueba
-            cy.get('#firstname').type(dataUser.name[0])
-            cy.get('#lastname').type(dataUser.lastName[0])
-            cy.get('#email_address').type(dataUser.email[1])
-            cy.get('#password').type(dataUser.password[0])
-            cy.get('#password-confirmation').type(dataUser.password[0])
+            cy.generate_firstname_and_lastname().then(names => {
+                cy.generate_email_and_password().then(credentials => {
+                    cy.generate_random_date().then(dates => {
+
+                        const { email, password } = credentials
+                        const { firstName, lastName } = names
+                        const { month, day, year } = dates
+
+                        cy.get('#firstname').type(firstName)
+                        cy.get('#lastname').type(lastName)
+                        cy.get('#email_address').type(email)
+                        cy.get('#password').type(password)
+                        cy.get('#password-confirmation').type(password)
+
+                        cy.get('#dob').click().should('be.visible') // Fecha de nacimiendo
+                        cy.get('.ui-datepicker-month').should('be.visible').select(month) // Fecha de nacimiendo
+                        cy.get('.ui-datepicker-year').should('be.visible').select(year.toString()) // Fecha de nacimiendo
+                        cy.get('.ui-state-default').contains(day).click() // Fecha de nacimiendo
+
+                        //Guardo los datos de email utilizado para usarlo en el siguiente caso
+                        cy.set_credentials_email_and_password(credentials);
+                        //cy.wrap(email).as('savedCredentials');
+                    });
+                });
+            });
+
             cy.get('#terms_and_conditions').check()
-
-            cy.get('#dob').click().should('be.visible') // Fecha de nacimiendo
-            cy.get('.ui-datepicker-month').should('be.visible').select(dataUser.birthdate[0]) // Fecha de nacimiendo
-            cy.get('.ui-datepicker-year').should('be.visible').select(dataUser.birthdate[1]) // Fecha de nacimiendo
-            cy.get('.ui-state-default:eq(4)').click() // Fecha de nacimiendo
 
             // Hacer clic en "Crear cuenta" del formulario
             cy.get('#send2').click()
@@ -46,25 +62,42 @@ describe('Test cases for Create Account flow', () => {
         })
 
         // CRE-002: Verificar que un usuario registrado no pueda crear una cuenta
-        it('CRE-002: Verify that a registered user cannot create an account', () => {
+        it.only('CRE-002: Verify that a registered user cannot create an account', () => {
 
             // Hacer clic en el botón "Mi Cuenta" para abrir el MODAL
             cy.get('.customer-welcome > .action').click()
+
             // Hacer clic en el botón de "Crear una cuenta"
-            cy.get('.customer-account-create-link > span').click()
+            cy.get('.customer-account-create-link').click()
 
-            // Rellenar el formulario de registro con datos de prueba
-            cy.get('#firstname').type(dataUser.name[0])
-            cy.get('#lastname').type(dataUser.lastName[0])
-            cy.get('#email_address').type(dataUser.email[1])
-            cy.get('#password').type(dataUser.password[0])
-            cy.get('#password-confirmation').type(dataUser.password[0])
+            cy.generate_firstname_and_lastname().then(names => {
+                cy.generate_random_date().then(dates => {
+
+                    const { firstName, lastName } = names
+                    const { month, day, year } = dates
+
+                    cy.get('#firstname').type(firstName)
+                    cy.get('#lastname').type(lastName)
+
+                    //Obtendo los datos de correo y contraseña utilizado en el caso pasado
+                    cy.get_credentials_email_and_password().then(credentials => {
+
+                        const { email, password } = credentials
+
+                        cy.get('#email_address').type(email)
+                        cy.get('#password').type(password)
+                        cy.get('#password-confirmation').type(password)
+                    });
+
+                    cy.get('#dob').click().should('be.visible') // Fecha de nacimiendo
+                    cy.get('.ui-datepicker-month').should('be.visible').select(month) // Fecha de nacimiendo
+                    cy.get('.ui-datepicker-year').should('be.visible').select(year.toString()) // Fecha de nacimiendo
+                    cy.get('.ui-state-default').contains(day).click() // Fecha de nacimiendo
+
+                });
+            });
+
             cy.get('#terms_and_conditions').check()
-
-            cy.get('#dob').click().should('be.visible') // Fecha de nacimiendo
-            cy.get('.ui-datepicker-month').should('be.visible').select(dataUser.birthdate[0]) // Fecha de nacimiendo
-            cy.get('.ui-datepicker-year').should('be.visible').select(dataUser.birthdate[1]) // Fecha de nacimiendo
-            cy.get('.ui-state-default:eq(4)').click() // Fecha de nacimiendo
 
             // Hacer clic en "Crear cuenta" del formulario
             cy.get('#send2').click()
