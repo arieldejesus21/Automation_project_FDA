@@ -30,10 +30,10 @@ describe('Test cases for Add To Cart', () => {
                 cy.get('.ammenu-text').contains('Bebidas').click()
 
                 //Guardo el nombre del producto
-                cy.get('.product-item-actions').find('input').filter((index, element) => element.value === '317').parent().invoke('attr', 'data-product-sku').as('saveNameTest')
+                cy.get('.product-item-actions').find('input').filter((index, element) => element.value === '36644').parent().invoke('attr', 'data-product-sku').as('saveNameTest')
 
                 //Dar clic en "Agregar al carrito"
-                cy.get('.product-item-actions').find('input').filter((index, element) => element.value === '317').parent().contains('Agregar al carrito').click();
+                cy.get('.product-item-actions').find('input').filter((index, element) => element.value === '36644').parent().contains('Agregar al carrito').click();
 
                 //Espera para que se agregue el producto
                 cy.wait(2000)
