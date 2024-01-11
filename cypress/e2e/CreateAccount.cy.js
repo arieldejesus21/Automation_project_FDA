@@ -1,14 +1,6 @@
 /// <reference types='Cypress' />
 
 describe('Test cases for Create Account flow', () => {
-    let dataUser; // Variable para almacenar los datos cargados desde el JSON
-
-    before(() => {
-        // Cargar los datos desde el archivo JSON
-        cy.fixture('dataFDA.json').then((data) => {
-            dataUser = data;
-        });
-    });
 
     beforeEach(() => {
         cy.visit('https://mcstaging.fahorro.com/')
@@ -262,7 +254,6 @@ describe('Test cases for Create Account flow', () => {
                     });
                 });
             });
-
         })
 
         // CRE-011: Verificar que se presente mensaje de error cuando la contraseña no cumpla con las diferentes clases de caracteres
@@ -298,7 +289,6 @@ describe('Test cases for Create Account flow', () => {
 
                             //Verificar que aparezca mensaje de error //Debe tener todo el mensaje para verificar que esté en español
                             cy.get('#password-error').should('exist').should('have.text', 'El mínimo de diferentes clases de caracteres en la contraseña es 3. Clases de caracteres: minúsculas, mayúsculas, dígitos, caracteres especiales.')
-
                         });
                     });
                 });
@@ -370,7 +360,6 @@ describe('Test cases for Create Account flow', () => {
                         cy.get('.ui-datepicker-year').should('be.visible').select(year.toString()) // Fecha de nacimiendo
                         cy.get('.ui-datepicker-month').should('be.visible').select(month) // Fecha de nacimiendo
                         cy.get('.ui-state-default').contains(day).click() // Fecha de nacimiendo
-
                     });
                 });
             });
@@ -382,6 +371,5 @@ describe('Test cases for Create Account flow', () => {
 
             cy.get('#terms_and_conditions-error').should('be.visible')
         })
-
     })
 })

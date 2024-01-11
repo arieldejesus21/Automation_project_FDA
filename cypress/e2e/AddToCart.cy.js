@@ -30,10 +30,9 @@ describe('Test cases for Add To Cart', () => {
                 cy.get('.ammenu-text').contains('Bebidas').click()
 
                 //Guardo el nombre del producto
-                cy.get('.product-item-actions').find('input').filter((index, element) => element.value === '36644').parent().invoke('attr', 'data-product-sku').as('saveNameTest')
-
+                cy.get('.product-item-actions').find('input').filter((index, element) => element.value === '29726').parents('.product-item-details').find('a').invoke('text').as('saveNameTest')
                 //Dar clic en "Agregar al carrito"
-                cy.get('.product-item-actions').find('input').filter((index, element) => element.value === '36644').parent().contains('Agregar al carrito').click();
+                cy.get('.product-item-actions').find('input').filter((index, element) => element.value === '29726').parent().contains('Agregar al carrito').click();
 
                 //Espera para que se agregue el producto
                 cy.wait(2000)
@@ -46,11 +45,9 @@ describe('Test cases for Add To Cart', () => {
 
                 //Verificar que el producto se haya agregado mediante el nombre del producto
                 cy.get('@saveNameTest').then((nameText) => {
-                    cy.get('.minicart-items-wrapper').find('a').contains(nameText)
+                    cy.get('.minicart-items-wrapper').find('a').contains(nameText.trim())
                 });
-
             })
-
         })
 
         // ADDP-002: Verificar que permita añadir un Producto al Carrito desde la Página de Detalle de Producto (PDP) - Guest
@@ -59,7 +56,7 @@ describe('Test cases for Add To Cart', () => {
             cy.getInitialCartCount().then((initialCount) => {
 
                 //Visitar página de producto
-                cy.visit("https://mcstaging.fahorro.com/prueba-omni-qa-3.html")
+                cy.visit("https://mcstaging.fahorro.com/producto-qa-omni-2.html")
                 cy.wait(2000)
 
                 //Agregar producto al carrito de compra
@@ -71,20 +68,22 @@ describe('Test cases for Add To Cart', () => {
                 //Utiliza el comando personalizado para verificar que el contador del carrito se ha actualizado
                 cy.checkCartCounter(initialCount + 1)
             })
-
         })
 
         // ADDP-004: Verificar que permita añadir Múltiples Unidades de un Producto al Carrito - Guest
         it('ADDP-004: Verify that it allows adding Multiple Units of a Product to the Cart - Guest', () => {
 
+            //Genera número aleatorio del 2 al 10
+            let randomNumber = Math.floor(Math.random() * 9) + 2;
+
             cy.getInitialCartCount().then((initialCount) => {
 
                 //Visitar página de producto
-                cy.visit("https://mcstaging.fahorro.com/prueba-omni-qa-3.html")
+                cy.visit("https://mcstaging.fahorro.com/producto-qa-omni-2.html")
                 cy.wait(2000)
 
                 //Añadir 5 unidades del producto al carrito de compras
-                cy.get('#qty').clear().type("5")
+                cy.get('#qty').clear().type(randomNumber)
 
                 //Agregar producto al carrito de compra
                 cy.get('#product-addtocart-button').click()
@@ -93,7 +92,7 @@ describe('Test cases for Add To Cart', () => {
                 cy.get('.message-success').should("be.visible").contains("a tu carrito de compra.")
 
                 //Utiliza el comando personalizado para verificar que el contador del carrito se ha actualizado
-                cy.checkCartCounter(initialCount + 5)
+                cy.checkCartCounter(initialCount + randomNumber)
             })
         })
 
@@ -103,7 +102,7 @@ describe('Test cases for Add To Cart', () => {
             cy.getInitialCartCount().then((initialCount) => {
 
                 //Visitar página de producto
-                cy.visit("https://mcstaging.fahorro.com/prueba-omni-qa-3.html")
+                cy.visit("https://mcstaging.fahorro.com/producto-qa-omni-2.html")
                 cy.wait(2000)
 
                 //Agregar producto al carrito de compra
@@ -126,9 +125,7 @@ describe('Test cases for Add To Cart', () => {
 
                 //Verifica que esté en la página principal
                 cy.url().should('include', '/')
-
             })
-
         })
 
         // ADDP-006: Verificar que permita añadir un Producto al Carrito desde la Página de categorias (PLP) - Login
@@ -145,6 +142,9 @@ describe('Test cases for Add To Cart', () => {
             //Hacer clic en botón "Iniciar sesión"
             cy.get('#send2').click()
 
+            //Verifica que el logueo fue exitoso
+            cy.get('.box-information > .box-content > p').contains(dataUser.email[3])
+
             //Se vacía carrito de compras
             cy.visit("https://mcstaging.fahorro.com/checkout/cart/")
             cy.wait(1000)
@@ -155,7 +155,6 @@ describe('Test cases for Add To Cart', () => {
                     cy.get('#empty_cart_button').click()
                     cy.get('.action-primary').should("be.visible").click()
                     cy.get('.cart-empty > :nth-child(1)').should("be.visible").contains("No tienes artículos en tu carrito de compra")
-
                 }
             });
 
@@ -170,10 +169,9 @@ describe('Test cases for Add To Cart', () => {
                 cy.get('.ammenu-text').contains('Bebidas').click()
 
                 //Guardo el nombre del producto
-                cy.get('.product-item-actions').find('input').filter((index, element) => element.value === '317').parent().invoke('attr', 'data-product-sku').as('saveNameTest')
-
+                cy.get('.product-item-actions').find('input').filter((index, element) => element.value === '29726').parents('.product-item-details').find('a').invoke('text').as('saveNameTest')
                 //Dar clic en "Agregar al carrito"
-                cy.get('.product-item-actions').find('input').filter((index, element) => element.value === '317').parent().contains('Agregar al carrito').click();
+                cy.get('.product-item-actions').find('input').filter((index, element) => element.value === '29726').parent().contains('Agregar al carrito').click();
 
                 //Espera para que se agregue el producto
                 cy.wait(2000)
@@ -186,11 +184,9 @@ describe('Test cases for Add To Cart', () => {
 
                 //Verificar que el producto se haya agregado mediante el nombre del producto
                 cy.get('@saveNameTest').then((nameText) => {
-                    cy.get('.minicart-items-wrapper').find('a').contains(nameText)
+                    cy.get('.minicart-items-wrapper').find('a').contains(nameText.trim())
                 });
-
             })
-
         })
 
         // ADDP-007: Verificar que permita añadir un Producto al Carrito desde la Página de Detalle de Producto (PDP) - Login
@@ -207,6 +203,9 @@ describe('Test cases for Add To Cart', () => {
             //Hacer clic en botón "Iniciar sesión"
             cy.get('#send2').click()
 
+            //Verifica que el logueo fue exitoso
+            cy.get('.box-information > .box-content > p').contains(dataUser.email[3])
+
             //Se vacía carrito de compras
             cy.visit("https://mcstaging.fahorro.com/checkout/cart/")
             cy.wait(1000)
@@ -217,7 +216,6 @@ describe('Test cases for Add To Cart', () => {
                     cy.get('#empty_cart_button').click()
                     cy.get('.action-primary').should("be.visible").click()
                     cy.get('.cart-empty > :nth-child(1)').should("be.visible").contains("No tienes artículos en tu carrito de compra")
-
                 }
             });
 
@@ -242,6 +240,9 @@ describe('Test cases for Add To Cart', () => {
         // ADDP-009: Verificar que permita añadir Múltiples Unidades de un Producto al Carrito - Login
         it('ADDP-009: Verify that it allows adding Multiple Units of a Product to the Cart - Login', () => {
 
+            //Genera número aleatorio del 2 al 10
+            let randomNumber = Math.floor(Math.random() * 9) + 2;
+
             // Hacer clic en el botón "Mi Cuenta" para abrir el MODAL
             cy.get('.customer-welcome > .action').click()
             // Hacer clic en el botón de "Iniciar sesion"
@@ -252,6 +253,9 @@ describe('Test cases for Add To Cart', () => {
 
             //Hacer clic en botón "Iniciar sesión"
             cy.get('#send2').click()
+
+            //Verifica que el logueo fue exitoso
+            cy.get('.box-information > .box-content > p').contains(dataUser.email[3])
 
             //Se vacía carrito de compras
             cy.visit("https://mcstaging.fahorro.com/checkout/cart/")
@@ -274,7 +278,7 @@ describe('Test cases for Add To Cart', () => {
                 cy.wait(2000)
 
                 //Añadir 5 unidades del producto al carrito de compras
-                cy.get('#qty').clear().type("5")
+                cy.get('#qty').clear().type(randomNumber)
 
                 //Agregar producto al carrito de compra
                 cy.get('#product-addtocart-button').click()
@@ -283,7 +287,7 @@ describe('Test cases for Add To Cart', () => {
                 cy.get('.message-success').should("be.visible").contains("a tu carrito de compra.")
 
                 //Utiliza el comando personalizado para verificar que el contador del carrito se ha actualizado
-                cy.checkCartCounter(initialCount + 5)
+                cy.checkCartCounter(initialCount + randomNumber)
             })
         })
 
@@ -301,6 +305,9 @@ describe('Test cases for Add To Cart', () => {
             //Hacer clic en botón "Iniciar sesión"
             cy.get('#send2').click()
 
+            //Verifica que el logueo fue exitoso
+            cy.get('.box-information > .box-content > p').contains(dataUser.email[3])
+
             //Se vacía carrito de compras
             cy.visit("https://mcstaging.fahorro.com/checkout/cart/")
             cy.wait(1000)
@@ -311,14 +318,13 @@ describe('Test cases for Add To Cart', () => {
                     cy.get('#empty_cart_button').click()
                     cy.get('.action-primary').should("be.visible").click()
                     cy.get('.cart-empty > :nth-child(1)').should("be.visible").contains("No tienes artículos en tu carrito de compra")
-
                 }
             });
 
             cy.getInitialCartCount().then((initialCount) => {
 
                 //Visitar página de producto
-                cy.visit("https://mcstaging.fahorro.com/prueba-omni-qa-3.html")
+                cy.visit("https://mcstaging.fahorro.com/producto-qa-omni-2.html")
                 cy.wait(2000)
 
                 //Agregar producto al carrito de compra
@@ -343,7 +349,6 @@ describe('Test cases for Add To Cart', () => {
                 cy.url().should('include', '/')
 
             })
-
         })
     })
 })
